@@ -13,9 +13,9 @@ LightState records:
 
 # Switch Down Events
 Events are recorded by setting bits in an Integer in each LightState record. The interrupt handler sets events. The main loop handles and clears events. There is currently no locking of the event Integer, so it is possible to lose a DIMM event. ON/OFF events are one off events, so shouldn't be lost.
-* The light is turned ON, if it was off
-* The light alternately dims or brightens, if the switch is held down for longer than 1/2s
-* The light is turned OFF, if it was ON, and the switch was down less than 1/2s
+* ON: The light is turned ON, if it was OFF
+* DIMM: The light alternately dims or brightens, if the switch is held down for longer than 1/2s
+* OFF: The light is turned OFF, if it was ON, and the switch was down less than 1/2s
 
 # The PIO state machines
 Each state machine monitors an input switch pin.
@@ -24,7 +24,7 @@ Each state machine monitors an input switch pin.
 * On switch up, the state machine sends a final interrupt
 
 # The interrupt handler
-Timing is done by incrementing a per state machine counter, each interrupt is sent by a state machine.
+Timing is done by incrementing a per state machine counter, for each interrupt that is sent by a state machine.
 Interrupts will occur approximately every 1/16s, while the switch is down, so 8 interrupts represent 1/2s.
 
 * If the light was off, the output light pin is turned on, after 2 interrupts (1/8th second)
