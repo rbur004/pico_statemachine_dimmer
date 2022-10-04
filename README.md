@@ -33,8 +33,13 @@ Interrupts will occur approximately every 1/16s, while the switch is down, so 8 
 * If the switch is held down for more than 8 interrupts (1/2s)
 ** A DIMM event is set, for the main loop to handle
 * If the switch is released within 8 interrupts (1/2s)
-** If the light was ON when the switch was pushed, then  an OFF event is set, for the main loop to handle
-** The light pin is set to off
+** If the light was ON when the switch was pushed,
+** * an OFF event is set, for the main loop to handle
+** * The light pin is set to off
+** The interrupt timing counter is reset to 0
+** The final ON/OFF state is recorded in the LightState
+* If we were Dimming
+** reverse the dim direction
 ** The interrupt timing counter is reset to 0
 ** The final ON/OFF state is recorded in the LightState
 
