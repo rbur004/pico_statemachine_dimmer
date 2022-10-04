@@ -28,20 +28,20 @@ Timing is done by incrementing a per state machine counter, each interrupt is se
 Interrupts will occur approximately every 1/16s, while the switch is down, so 8 interrupts represent 1/2s.
 
 * If the light was off, the output light pin is turned on, after 2 interrupts (1/8th second)
-** An ON event is set, for the main loop to handle
-** the light pin is set to on
+* * An ON event is set, for the main loop to handle
+* * the light pin is set to on
 * If the switch is held down for more than 8 interrupts (1/2s)
-** A DIMM event is set, for the main loop to handle
+* * A DIMM event is set, for the main loop to handle
 * If the switch is released within 8 interrupts (1/2s)
-** If the light was ON when the switch was pushed,
-** * an OFF event is set, for the main loop to handle
-** * The light pin is set to off
-** The interrupt timing counter is reset to 0
-** The final ON/OFF state is recorded in the LightState
+* * If the light was ON when the switch was pushed,
+* * * an OFF event is set, for the main loop to handle
+* * * The light pin is set to off
+* * The interrupt timing counter is reset to 0
+* * The final ON/OFF state is recorded in the LightState
 * If we were Dimming
-** reverse the dim direction
-** The interrupt timing counter is reset to 0
-** The final ON/OFF state is recorded in the LightState
+* * reverse the dim direction
+* * The interrupt timing counter is reset to 0
+* * The final ON/OFF state is recorded in the LightState
 
 # The main loop
 Each light's LightState is checked at approximately 1/100th of a second intervals, for ON, OFF or DIMM events set by the interrupt handler.
